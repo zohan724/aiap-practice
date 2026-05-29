@@ -249,13 +249,11 @@ function wireEvents() {
   });
 
   els.submitExam.addEventListener("click", () => {
-    if (!state.filtered.length) return;
-    if (confirm("確定要交卷並查看成績？")) submitExam();
+    requestSubmitExam();
   });
 
   els.submitExamSide.addEventListener("click", () => {
-    if (!state.filtered.length) return;
-    if (confirm("確定要交卷並查看成績？")) submitExam();
+    requestSubmitExam();
   });
 
   els.retakeExam.addEventListener("click", () => {
@@ -461,6 +459,28 @@ function restoreExamSet() {
 
 function isExamInProgress() {
   return state.mode === "exam" && Boolean(state.examSession?.startedAt) && Boolean(state.examSession?.answers) && !state.examSession?.submittedAt && !state.examResult;
+}
+
+function getActiveExamQuestions() {
+  if (state.filtered.length) return state.filtered;
+  if (!isExamInProgress()) return [];
+  const restored = restoreExamSet();
+  if (restored.length) state.filtered = restored;
+  return restored;
+}
+
+function requestSubmitExam() {
+  const examQuestions = getActiveExamQuestions();
+  if (!examQuestions.length) {
+    alert("目前沒有可交卷的模擬考題組，請重新開始模擬考。");
+    clearExamSession();
+    state.examResult = null;
+    state.activeSetIds = null;
+    state.index = 0;
+    applyFilters();
+    return;
+  }
+  if (confirm("確定要交卷並查看成績？")) submitExam(false, examQuestions);
 }
 
 function clearExamSession() {
@@ -853,22 +873,32 @@ function answerQuestion(question, selected) {
   render();
 }
 
-function submitExam(isAutoSubmit = false) {
+function submitExam(isAutoSubmit = false, examQuestions = getActiveExamQuestions()) {
+  if (!examQuestions.length) {
+    clearExamSession();
+    state.examResult = null;
+    state.activeSetIds = null;
+    state.index = 0;
+    if (!isAutoSubmit) alert("模擬考題組已遺失，請重新開始模擬考。");
+    applyFilters();
+    return;
+  }
   stopTimer();
   const submittedAt = Date.now();
   const examAnswers = state.examSession?.answers ?? {};
   state.examSession = {
     ...(state.examSession ?? {}),
-    ids: state.filtered.map((question) => question.id),
+    ids: examQuestions.map((question) => question.id),
     answers: examAnswers,
     submittedAt,
   };
   saveJson("aiap-exam-session", state.examSession);
-  state.filtered.forEach((question) => {
+  examQuestions.forEach((question) => {
     if (examAnswers[question.id]) state.progress[question.id] = examAnswers[question.id];
   });
   saveJson("aiap-progress", state.progress);
-  state.examResult = buildResult(state.filtered, submittedAt, examAnswers);
+  state.filtered = examQuestions;
+  state.examResult = buildResult(examQuestions, submittedAt, examAnswers);
   if (isAutoSubmit) alert("時間到，系統已自動交卷。");
   render();
 }
@@ -1047,5 +1077,11 @@ function loadJson(key, fallback) {
 }
 
 function saveJson(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch (error) {
+    console.warn(`Failed to save ${key}`, error);
+    return false;
+  }
 }
