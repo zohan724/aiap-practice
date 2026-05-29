@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 應用規劃師（初級）歷屆考題練習</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="appShell" class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div>
+            <h1>AI 應用規劃師（初級）考題練習</h1>
+            <p>依官方 114、115 年（初級）能力鑑定公告試題建立</p>
+          </div>
+        </div>
+        <nav class="mode-tabs" aria-label="練習模式">
+          <button class="tab is-active" data-mode="home">首頁</button>
+          <button class="tab" data-mode="practice">練習</button>
+          <button class="tab" data-mode="generated">自創題</button>
+          <button class="tab" data-mode="exam">模擬考</button>
+          <button class="tab" data-mode="wrong">錯題本</button>
+          <button class="tab" data-mode="saved">收藏</button>
+          <button class="tab" data-mode="unsure">不確定</button>
+        </nav>
+        <button id="resetProgress" class="icon-button" title="清除作答紀錄" aria-label="清除作答紀錄">
+          <span aria-hidden="true">↺</span>
+        </button>
+      </header>
+
+      <section id="homePanel" class="home-panel" aria-label="網站首頁">
+        <div class="home-hero">
+          <div class="home-copy">
+            <h2>AI 應用規劃師（初級）練習入口</h2>
+            <p>整理官方歷屆試題與學習指引延伸題，讓你先用少量題目建立手感，再進入正式模擬考。練習紀錄保存在本機，可自行匯出備份。</p>
+            <div class="home-actions">
+              <button class="primary-button large" data-start-mode="practice">開始歷屆題練習</button>
+              <button class="secondary-button large" data-start-mode="exam">進入正式模擬考</button>
+            </div>
+          </div>
+          <div class="home-summary" aria-label="題庫摘要">
+            <div><span>官方歷屆題</span><strong>200 題</strong></div>
+            <div><span>自創延伸題</span><strong>100 題</strong></div>
+            <div><span>（初級）科目</span><strong>2 科</strong></div>
+          </div>
+        </div>
+
+        <div class="home-entry-grid">
+          <article class="home-entry">
+            <h3>歷屆題練習</h3>
+            <p>依年度、科目、作答狀態篩選，可以從 5 題、10 題或自訂題數開始。</p>
+            <button class="text-button" data-start-mode="practice">前往練習</button>
+          </article>
+          <article class="home-entry">
+            <h3>自創題專區</h3>
+            <p>依學習指引延伸出題，適合補足觀念、熟悉考點變化與應用情境。</p>
+            <button class="text-button" data-start-mode="generated">練習自創題</button>
+          </article>
+          <article class="home-entry">
+            <h3>正式模擬考</h3>
+            <p>按下開始後才抽題與計時，考試中不顯示答案、收藏或不確定標記。</p>
+            <button class="text-button" data-start-mode="exam">準備模擬考</button>
+          </article>
+        </div>
+
+        <div class="home-info-grid">
+          <section class="home-info">
+            <h3>建議使用方式</h3>
+            <ol>
+              <li>先用 5-20 題練習建立題感。</li>
+              <li>把不熟的題目標記，定期回到錯題本與不確定題複習。</li>
+              <li>考前再進入模擬考，檢查兩科的穩定度。</li>
+            </ol>
+          </section>
+          <section class="home-info">
+            <h3>資料與紀錄</h3>
+            <p>官方題目來源以 iPAS 考試單位公告為準；本站不需登入，所有練習紀錄只保存在目前裝置。</p>
+            <a class="source-link compact" href="https://www.ipas.org.tw/AIAP" target="_blank" rel="noopener noreferrer">
+              <span>查看 iPAS AIAP 官方網站</span><span aria-hidden="true">↗</span>
+            </a>
+          </section>
+          <section class="home-info">
+            <h3>合作交流</h3>
+            <p>如果你正在思考 AI 導入、自動化流程、內部工具、資料整理、教育訓練或其他 AI 相關合作，歡迎交流。</p>
+            <div class="contact-icons compact" aria-label="合作聯繫方式">
+              <a id="homeContactLink" class="contact-icon contact-icon--email" href="mailto:zohan.eth@gmail.com" aria-label="Email 聯繫">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 6h16v12H4z"></path>
+                  <path d="m4 7 8 6 8-6"></path>
+                </svg>
+              </a>
+              <a class="contact-icon contact-icon--x" href="https://x.com/zohanlin" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter zohanlin">
+                <svg viewBox="0 0 1200 1227" aria-hidden="true">
+                  <path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894L144.011 79.694h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"></path>
+                </svg>
+              </a>
+              <a class="contact-icon contact-icon--facebook" href="https://www.facebook.com/zohanlin" target="_blank" rel="noopener noreferrer" aria-label="Facebook zohanlin">
+                <svg viewBox="0 0 512 512" aria-hidden="true">
+                  <path d="M512 256C512 114.615 397.385 0 256 0S0 114.615 0 256c0 127.777 93.616 233.685 216 252.89V330h-65v-74h65v-56.4c0-64.16 38.219-99.6 96.695-99.6 28.009 0 57.305 5 57.305 5v63h-32.281C305.918 168 296 187.733 296 207.978V256h71l-11.35 74H296v178.89C418.384 489.685 512 383.777 512 256Z"></path>
+                  <path d="M355.65 330 367 256h-71v-48.022C296 187.733 305.918 168 337.719 168H370v-63s-29.296-5-57.305-5C254.219 100 216 135.44 216 199.6V256h-65v74h65v178.89a257.57 257.57 0 0 0 80 0V330h59.65Z"></path>
+                </svg>
+              </a>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="statsGrid" class="stats-grid" aria-label="練習統計">
+        <div class="stat">
+          <span>題庫總數</span>
+          <strong id="statTotal">--</strong>
+        </div>
+        <div class="stat">
+          <span>已作答</span>
+          <strong id="statAnswered">--</strong>
+        </div>
+        <div class="stat">
+          <span>正確率</span>
+          <strong id="statAccuracy">--</strong>
+        </div>
+        <div class="stat">
+          <span>錯題</span>
+          <strong id="statWrong">--</strong>
+        </div>
+        <div class="stat">
+          <span>收藏</span>
+          <strong id="statSaved">--</strong>
+        </div>
+      </section>
+
+      <main class="workspace">
+        <aside id="filtersPanel" class="filters" aria-label="篩選條件">
+          <div class="panel-head">
+            <h2>篩選條件</h2>
+            <button id="clearFilters" class="text-button">清除</button>
+          </div>
+
+          <fieldset>
+            <legend>考試年度</legend>
+            <label><input type="checkbox" name="year" value="114" checked />114 年第四梯次</label>
+            <label><input type="checkbox" name="year" value="115" checked />115 年第一次</label>
+          </fieldset>
+
+          <fieldset>
+            <legend>考試科目</legend>
+            <label><input type="checkbox" name="subject" value="1" checked />第一科 人工智慧基礎概論</label>
+            <label><input type="checkbox" name="subject" value="2" checked />第二科 生成式 AI 應用與規劃</label>
+          </fieldset>
+
+          <fieldset>
+            <legend>題目狀態</legend>
+            <label><input type="checkbox" name="status" value="unanswered" />尚未作答</label>
+            <label><input type="checkbox" name="status" value="wrong" />答錯題目</label>
+            <label><input type="checkbox" name="status" value="saved" />已收藏</label>
+          </fieldset>
+
+          <fieldset id="practiceSizeField">
+            <legend>本次練習題數</legend>
+            <div class="size-grid" role="group" aria-label="本次練習題數">
+              <label><input type="radio" name="practiceSize" value="5" />5 題</label>
+              <label><input type="radio" name="practiceSize" value="10" />10 題</label>
+              <label><input type="radio" name="practiceSize" value="20" checked />20 題</label>
+              <label><input type="radio" name="practiceSize" value="50" />50 題</label>
+              <label><input type="radio" name="practiceSize" value="all" />全部</label>
+            </div>
+            <label class="custom-size-label" for="customPracticeSize">
+              <span>自訂</span>
+              <input id="customPracticeSize" class="number-input" type="number" min="1" max="200" placeholder="題數" />
+            </label>
+          </fieldset>
+
+          <label class="search-label" for="searchInput">關鍵字搜尋</label>
+          <input id="searchInput" class="search-input" type="search" placeholder="輸入題幹或選項文字" />
+
+          <div class="filter-actions">
+            <button id="randomQuestion" class="primary-button">產生隨機題組</button>
+            <button id="restartSet" class="secondary-button">從第一題開始</button>
+          </div>
+        </aside>
+
+        <section class="question-panel" aria-live="polite">
+          <div id="loadingState" class="loading-state">
+            <div class="loader"></div>
+            <h2>正在載入官方題庫</h2>
+            <p>題目已由官方 PDF 建立成練習題庫，載入後即可開始作答。</p>
+          </div>
+
+          <section id="examBar" class="exam-bar" hidden>
+            <div>
+              <span>模擬考</span>
+              <strong id="examTimer">--:--</strong>
+            </div>
+            <div>
+              <span>已作答</span>
+              <strong id="examAnswered">0 / 0</strong>
+            </div>
+            <div>
+              <span>答案檢視</span>
+              <strong id="examMarked">關閉</strong>
+            </div>
+            <button id="submitExam" class="primary-button">交卷</button>
+          </section>
+
+          <section id="examStartPanel" class="exam-start-panel" hidden>
+            <span class="source-chip">正式模擬</span>
+            <h2>準備開始模擬考</h2>
+            <p>按下開始後才會隨機抽題並啟動計時。考試中不會顯示答案、收藏或不確定標記；交卷後才會看到成績與檢討方向。</p>
+            <dl class="exam-rules">
+              <div><dt>抽題規則</dt><dd>每科隨機抽取 50 題</dd></div>
+              <div><dt>考試時間</dt><dd id="examStartDuration">--</dd></div>
+              <div><dt>預計題數</dt><dd id="examStartCount">--</dd></div>
+            </dl>
+            <button id="startExam" class="primary-button large">開始模擬考</button>
+          </section>
+
+          <div id="emptyState" class="empty-state" hidden>
+            <h2>目前沒有符合條件的題目</h2>
+            <p>請放寬年度、科目或題目狀態篩選。</p>
+          </div>
+
+          <section id="resultPanel" class="result-panel" hidden>
+            <div class="result-hero">
+              <div>
+                <h2>本次模擬考成績</h2>
+                <p id="resultSummary">--</p>
+              </div>
+              <strong id="resultScore">--</strong>
+            </div>
+            <div id="subjectBreakdown" class="breakdown-grid"></div>
+            <div id="topicBreakdown" class="topic-breakdown"></div>
+            <div class="result-actions">
+              <button id="reviewExamWrong" class="secondary-button">檢討錯題</button>
+              <button id="retakeExam" class="primary-button">重新抽模擬考</button>
+            </div>
+          </section>
+
+          <article id="questionCard" class="question-card" hidden>
+            <div class="question-meta">
+              <div>
+                <span id="questionPosition">-- / --</span>
+                <span id="questionSource" class="source-chip">--</span>
+              </div>
+              <div class="card-actions">
+                <button id="saveQuestion" class="icon-button" title="收藏題目" aria-label="收藏題目">☆</button>
+                <button id="revealAnswer" class="secondary-button small">看答案</button>
+              </div>
+            </div>
+
+            <h2 id="questionText" class="question-text"></h2>
+            <div id="optionsList" class="options-list"></div>
+
+            <section id="answerPanel" class="answer-panel" hidden>
+              <div class="answer-title">
+                <strong id="answerResult">答案</strong>
+                <span id="correctAnswer"></span>
+              </div>
+              <p id="answerHint"></p>
+            </section>
+
+            <footer class="question-footer">
+              <button id="prevQuestion" class="secondary-button">上一題</button>
+              <button id="markUnsure" class="secondary-button">標記不確定</button>
+              <button id="nextQuestion" class="primary-button">下一題</button>
+            </footer>
+          </article>
+        </section>
+
+        <aside class="review-rail" aria-label="練習側欄">
+          <section id="examControlPanel" class="exam-control-panel" hidden>
+            <section class="review-panel exam-card">
+              <span class="mini-note">AIAP MOCK EXAM</span>
+              <h2>正式模擬考</h2>
+              <p class="source-note">本區只保留考試必要資訊。開始後鎖定題組與篩選，不顯示答案、收藏、錯題提示或練習標記。</p>
+              <dl class="metric-list">
+                <div><dt>抽題規則</dt><dd>每科 50 題</dd></div>
+                <div><dt>答案檢視</dt><dd>交卷後開放</dd></div>
+              </dl>
+            </section>
+
+            <section class="review-panel exam-card" id="examStatusPanel">
+              <h2>考試狀態</h2>
+              <dl class="metric-list">
+                <div><dt>作答進度</dt><dd id="examSideAnswered">0 / 0</dd></div>
+                <div><dt>剩餘時間</dt><dd id="examSideTimer">--:--</dd></div>
+              </dl>
+              <button id="submitExamSide" class="primary-button">交卷</button>
+            </section>
+          </section>
+
+          <section class="review-panel">
+            <h2>練習進度</h2>
+            <div class="progress-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="48"></circle>
+                <circle id="progressArc" cx="60" cy="60" r="48"></circle>
+              </svg>
+              <strong id="ringAccuracy">--</strong>
+              <span>正確率</span>
+            </div>
+            <dl class="metric-list">
+              <div><dt>目前題組</dt><dd id="currentSetCount">--</dd></div>
+              <div><dt>已完成</dt><dd id="doneCount">--</dd></div>
+              <div><dt>不確定</dt><dd id="unsureCount">--</dd></div>
+            </dl>
+          </section>
+
+          <section class="review-panel">
+            <h2>本機備份</h2>
+            <p class="source-note">練習紀錄只保存在這台裝置。可匯出備份檔，換裝置時再匯入。</p>
+            <div class="stack-actions">
+              <button id="exportBackup" class="secondary-button">匯出備份</button>
+              <label class="secondary-button file-button" for="importBackup">匯入備份</label>
+              <input id="importBackup" class="visually-hidden" type="file" accept="application/json,.json" />
+            </div>
+            <p id="backupStatus" class="form-status" aria-live="polite"></p>
+          </section>
+
+          <section class="review-panel">
+            <div class="panel-head">
+              <h2>快速回顧</h2>
+              <button id="reviewWrong" class="text-button">錯題</button>
+            </div>
+            <div id="reviewList" class="review-list"></div>
+          </section>
+
+          <section id="questionPalettePanel" class="review-panel" hidden>
+            <div class="panel-head">
+              <h2>題號盤</h2>
+              <span id="paletteHint" class="mini-note">點擊跳題</span>
+            </div>
+            <div id="questionPalette" class="question-palette"></div>
+          </section>
+
+          <section class="review-panel">
+            <h2>合作聯繫</h2>
+            <p class="source-note">這個工具只是我實作 AI 應用的一個小入口。如果你正在思考 AI 導入、自動化流程、內部工具、資料整理、教育訓練、內容產製或其他 AI 相關合作，都歡迎交流。</p>
+            <div class="contact-icons" aria-label="合作聯繫方式">
+              <a id="contactLink" class="contact-icon contact-icon--email" href="mailto:hello@example.com?subject=AI%20%E6%87%89%E7%94%A8%E8%A6%8F%E5%8A%83%E5%B8%AB%E7%B7%B4%E7%BF%92%E7%B6%B2%E7%AB%99%E5%90%88%E4%BD%9C%E8%AB%AE%E8%A9%A2" aria-label="Email 聯繫">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 6h16v12H4z"></path>
+                  <path d="m4 7 8 6 8-6"></path>
+                </svg>
+              </a>
+              <a class="contact-icon contact-icon--x" href="https://x.com/zohanlin" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter zohanlin">
+                <svg viewBox="0 0 1200 1227" aria-hidden="true">
+                  <path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894L144.011 79.694h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"></path>
+                </svg>
+              </a>
+              <a class="contact-icon contact-icon--facebook" href="https://www.facebook.com/zohanlin" target="_blank" rel="noopener noreferrer" aria-label="Facebook zohanlin">
+                <svg viewBox="0 0 512 512" aria-hidden="true">
+                  <path d="M512 256C512 114.615 397.385 0 256 0S0 114.615 0 256c0 127.777 93.616 233.685 216 252.89V330h-65v-74h65v-56.4c0-64.16 38.219-99.6 96.695-99.6 28.009 0 57.305 5 57.305 5v63h-32.281C305.918 168 296 187.733 296 207.978V256h71l-11.35 74H296v178.89C418.384 489.685 512 383.777 512 256Z"></path>
+                  <path d="M355.65 330 367 256h-71v-48.022C296 187.733 305.918 168 337.719 168H370v-63s-29.296-5-57.305-5C254.219 100 216 135.44 216 199.6V256h-65v74h65v178.89a257.57 257.57 0 0 0 80 0V330h59.65Z"></path>
+                </svg>
+              </a>
+            </div>
+          </section>
+
+          <section class="review-panel">
+            <h2>官方資料來源</h2>
+            <div id="sourceLinks" class="source-links"></div>
+            <p class="source-note">考試資訊請以 iPAS 官方網站公告為準。</p>
+          </section>
+        </aside>
+      </main>
+
+      <footer class="site-footer">
+        由 Plant Seed AI 維護的免費練習資源，非官方網站，考試資訊請以 iPAS 公告為準。
+      </footer>
+    </div>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
