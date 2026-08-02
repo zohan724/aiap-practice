@@ -36,6 +36,7 @@
             <p>整理官方歷屆試題與學習指引延伸題，讓你先用少量題目建立手感，再進入正式模擬考。練習紀錄保存在本機，可自行匯出備份。</p>
             <div class="home-actions">
               <button class="primary-button large" data-start-mode="practice">開始歷屆題練習</button>
+              <button class="secondary-button large" data-start-mode="practice" data-sprint-topics="true">兩週衝刺考點練習</button>
               <button class="secondary-button large" data-start-mode="exam">進入正式模擬考</button>
             </div>
           </div>
@@ -51,6 +52,11 @@
             <h3>歷屆題練習</h3>
             <p>依年度、科目、作答狀態篩選，可以從 5 題、10 題或自訂題數開始。</p>
             <button class="text-button" data-start-mode="practice">前往練習</button>
+          </article>
+          <article class="home-entry">
+            <h3>依考點練習</h3>
+            <p>兩週衝刺時先練主要考點，約每天 20 題，快速補強機器學習、LLM、RAG、治理、導入與自動化。</p>
+            <button class="text-button" data-start-mode="practice" data-sprint-topics="true">開始衝刺</button>
           </article>
           <article class="home-entry">
             <h3>自創題專區</h3>
@@ -153,6 +159,15 @@
             <label><input type="checkbox" name="status" value="unanswered" />尚未作答</label>
             <label><input type="checkbox" name="status" value="wrong" />答錯題目</label>
             <label><input type="checkbox" name="status" value="saved" />已收藏</label>
+          </fieldset>
+
+          <fieldset id="topicField">
+            <legend>依考點練習</legend>
+            <div class="topic-filter-head">
+              <button id="selectSprintTopics" class="text-button" type="button">兩週衝刺</button>
+              <button id="selectAllTopics" class="text-button" type="button">全選</button>
+            </div>
+            <div id="topicFilters" class="topic-filter-list"></div>
           </fieldset>
 
           <fieldset id="practiceSizeField">

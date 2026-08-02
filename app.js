@@ -1,5 +1,75 @@
-const QUESTION_BANK_CACHE_KEY = "aiap-question-bank-v5";
+const QUESTION_BANK_CACHE_KEY = "aiap-question-bank-v6";
 const CONTACT_EMAIL = "zohan.eth@gmail.com";
+const SPRINT_TOPIC_IDS = ["ml-learning", "genai-llm", "ai-tech-app", "data-engineering", "prompt-rag-agent", "ai-project-planning", "ai-ethics-law", "model-eval-xai", "low-no-code", "security-risk"];
+
+const TOPIC_DEFINITIONS = [
+  {
+    id: "ml-learning",
+    name: "機器學習類型與訓練",
+    keywords: ["監督式", "非監督式", "強化學習", "訓練", "測試集", "驗證", "交叉驗證", "過擬合", "欠擬合", "偏差", "變異", "模型訓練", "學習方式", "分類", "迴歸"],
+    explanation: "先判斷題目在問監督式、非監督式、強化學習、資料切分、泛化能力或訓練風險。",
+  },
+  {
+    id: "genai-llm",
+    name: "LLM 與生成式 AI 基礎",
+    keywords: ["大型語言模型", "llm", "token", "上下文", "temperature", "幻覺", "生成式", "多模態", "clip", "transformer", "語言模型", "基礎模型", "diffusion", "gan"],
+    explanation: "注意模型能力、Token 與上下文限制、生成品質、多模態能力與模型輸出風險。",
+  },
+  {
+    id: "ai-tech-app",
+    name: "AI 技術應用場景",
+    keywords: ["電腦視覺", "自然語言處理", "語音辨識", "情感分析", "關鍵詞", "推薦系統", "異常偵測", "影像辨識", "人臉辨識", "診斷", "預測", "辨識", "自動化交易"],
+    explanation: "重點是把任務情境對應到適合的 AI 技術，例如 NLP、CV、推薦、異常偵測或預測分析。",
+  },
+  {
+    id: "data-engineering",
+    name: "資料處理與資料治理",
+    keywords: ["etl", "資料清洗", "資料品質", "結構化", "半結構化", "非結構化", "大數據", "volume", "velocity", "variety", "veracity", "value", "資料治理", "特徵工程", "特徵選擇", "編碼", "正規化", "標準化", "缺失值"],
+    explanation: "抓住資料來源、資料型態、資料品質、特徵處理與治理要求。",
+  },
+  {
+    id: "prompt-rag-agent",
+    name: "Prompt、RAG 與 Agent",
+    keywords: ["prompt", "提示詞", "rag", "檢索增強", "向量", "embedding", "agent", "代理", "cot", "chain of thought", "tree of thought", "mcp", "chat history", "上下文工程"],
+    explanation: "判斷題目是在考提示設計、檢索增強、對話記憶、工具串接或代理式流程。",
+  },
+  {
+    id: "ai-project-planning",
+    name: "AI 導入與專案規劃",
+    keywords: ["導入", "規劃", "需求分析", "成本效益", "roi", "poc", "試行", "部署", "維運", "mlops", "專案", "利害關係人", "風險評估", "導入策略", "企業"],
+    explanation: "重點通常在需求釐清、可行性、風險控管、效益衡量、導入流程與維運策略。",
+  },
+  {
+    id: "ai-ethics-law",
+    name: "AI 倫理、法規與治理",
+    keywords: ["倫理", "公平", "偏見", "歧視", "隱私", "個資", "透明", "問責", "人工智慧基本法", "金融機構", "揭露", "治理", "安全性", "可靠性", "ai 產品與系統評測", "人類監督"],
+    explanation: "留意公平性、透明性、隱私、問責、人類監督、揭露義務與治理機制。",
+  },
+  {
+    id: "model-eval-xai",
+    name: "模型評估與可解釋性",
+    keywords: ["準確率", "精確率", "召回率", "f1", "混淆矩陣", "lime", "shap", "可解釋", "explainable", "xai", "評估指標", "模型評估"],
+    explanation: "先看指標定義與使用情境，再判斷題目是否在考可解釋性或模型評估限制。",
+  },
+  {
+    id: "low-no-code",
+    name: "No-Code / Low-Code / 自動化",
+    keywords: ["no-code", "low-code", "automl", "webhook", "api", "dify", "n8n", "zapier", "make", "工作流程", "自動化流程", "條件分支", "router", "formatter", "iterator", "array aggregator", "vibe coding", "agentic coding"],
+    explanation: "注意流程元件、平台限制、整合能力、可維護性與自動化適用場景。",
+  },
+  {
+    id: "security-risk",
+    name: "資安與風險控管",
+    keywords: ["資安", "攻擊", "資料外洩", "風險", "存取控制", "權限", "稽核", "加密", "安全", "prompt injection", "越獄", "惡意"],
+    explanation: "判斷風險來源、資料保護、權限控管、攻擊面與安全治理措施。",
+  },
+  {
+    id: "other",
+    name: "其他/綜合情境",
+    keywords: [],
+    explanation: "先辨識題目核心名詞，再用情境條件與選項關鍵字排除不符合者。",
+  },
+];
 
 const state = {
   questions: [],
@@ -64,6 +134,10 @@ const els = {
   practiceSizeField: document.querySelector("#practiceSizeField"),
   customPracticeSize: document.querySelector("#customPracticeSize"),
   clearFilters: document.querySelector("#clearFilters"),
+  topicField: document.querySelector("#topicField"),
+  topicFilters: document.querySelector("#topicFilters"),
+  selectSprintTopics: document.querySelector("#selectSprintTopics"),
+  selectAllTopics: document.querySelector("#selectAllTopics"),
   searchInput: document.querySelector("#searchInput"),
   resetProgress: document.querySelector("#resetProgress"),
   reviewWrong: document.querySelector("#reviewWrong"),
@@ -107,6 +181,7 @@ async function init() {
     return;
   }
 
+  renderTopicFilters();
   applyFilters();
 }
 
@@ -138,6 +213,10 @@ function wireEvents() {
   document.querySelectorAll("[data-start-mode]").forEach((button) => {
     button.addEventListener("click", () => {
       setMode(button.dataset.startMode);
+      if (button.dataset.sprintTopics === "true") {
+        selectSprintTopics();
+        applyFilters();
+      }
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   });
@@ -149,6 +228,29 @@ function wireEvents() {
       state.index = 0;
       applyFilters();
     });
+  });
+
+  els.topicFilters.addEventListener("change", (event) => {
+    if (!event.target.matches("input[name='topic']")) return;
+    state.activeSetIds = null;
+    state.examResult = null;
+    state.index = 0;
+    applyFilters();
+  });
+
+  els.selectSprintTopics.addEventListener("click", () => {
+    selectSprintTopics();
+    applyFilters();
+  });
+
+  els.selectAllTopics.addEventListener("click", () => {
+    document.querySelectorAll("input[name='topic']").forEach((input) => {
+      input.checked = true;
+    });
+    state.activeSetIds = null;
+    state.examResult = null;
+    state.index = 0;
+    applyFilters();
   });
 
   document.querySelectorAll("input[name='practiceSize']").forEach((input) => {
@@ -186,6 +288,9 @@ function wireEvents() {
     });
     document.querySelectorAll("input[name='status']").forEach((input) => {
       input.checked = false;
+    });
+    document.querySelectorAll("input[name='topic']").forEach((input) => {
+      input.checked = true;
     });
     document.querySelector("input[name='practiceSize'][value='20']").checked = true;
     els.customPracticeSize.value = "";
@@ -316,7 +421,7 @@ function setMode(mode) {
 
 async function loadQuestionBank() {
   const cached = loadJson(QUESTION_BANK_CACHE_KEY, null);
-  if (cached?.length) return cached;
+  if (cached?.length) return cached.map(enrichQuestionTopic);
 
   const [pastResponse, generatedResponse] = await Promise.all([fetch("./public/questions.json"), fetch("./public/generated-questions.json")]);
   if (!pastResponse.ok || !generatedResponse.ok) throw new Error("Question bank JSON failed to load");
@@ -325,9 +430,74 @@ async function loadQuestionBank() {
   const questions = [
     ...pastQuestions.map((question) => ({ ...question, sourceType: question.sourceType ?? "past" })),
     ...generatedQuestions,
-  ];
+  ].map(enrichQuestionTopic);
   saveJson(QUESTION_BANK_CACHE_KEY, questions);
   return questions;
+}
+
+function renderTopicFilters() {
+  els.topicFilters.innerHTML = "";
+  TOPIC_DEFINITIONS.forEach((topic) => {
+    const label = document.createElement("label");
+    label.className = "topic-filter";
+    label.innerHTML = `
+      <input type="checkbox" name="topic" value="${topic.id}" checked />
+      <span>${topic.name}</span>
+      <small data-topic-count="${topic.id}">0</small>
+    `;
+    els.topicFilters.appendChild(label);
+  });
+  updateTopicFilterCounts();
+}
+
+function updateTopicFilterCounts() {
+  if (!els.topicFilters.children.length) return;
+  const counts = getTopicBasePool().reduce((acc, question) => {
+    acc[question.topicId] = (acc[question.topicId] ?? 0) + 1;
+    return acc;
+  }, {});
+  TOPIC_DEFINITIONS.forEach((topic) => {
+    const count = els.topicFilters.querySelector(`[data-topic-count='${topic.id}']`);
+    if (count) count.textContent = `${counts[topic.id] ?? 0} 題`;
+  });
+}
+
+function getTopicBasePool() {
+  const years = checkedValues("year");
+  const subjects = checkedValues("subject");
+  const statuses = checkedValues("status");
+  const query = els.searchInput.value.trim().toLowerCase();
+  let pool = state.questions.filter((question) => subjects.includes(question.subject));
+
+  if (state.mode === "generated") {
+    pool = pool.filter((question) => question.sourceType === "generated");
+  } else if (state.mode !== "exam") {
+    pool = pool.filter((question) => question.sourceType !== "generated" && years.includes(question.year));
+  }
+
+  if (state.mode === "wrong") pool = pool.filter((question) => state.progress[question.id]?.isCorrect === false);
+  if (state.mode === "saved") pool = pool.filter((question) => state.saved.has(question.id));
+  if (state.mode === "unsure") pool = pool.filter((question) => state.unsure.has(question.id));
+  if (statuses.includes("unanswered")) pool = pool.filter((question) => !state.progress[question.id]);
+  if (statuses.includes("wrong")) pool = pool.filter((question) => state.progress[question.id]?.isCorrect === false);
+  if (statuses.includes("saved")) pool = pool.filter((question) => state.saved.has(question.id));
+
+  if (query) {
+    pool = pool.filter((question) => {
+      const haystack = `${question.text} ${Object.values(question.options).join(" ")}`.toLowerCase();
+      return haystack.includes(query);
+    });
+  }
+  return pool;
+}
+
+function selectSprintTopics() {
+  document.querySelectorAll("input[name='topic']").forEach((input) => {
+    input.checked = SPRINT_TOPIC_IDS.includes(input.value);
+  });
+  state.activeSetIds = null;
+  state.examResult = null;
+  state.index = 0;
 }
 
 function applyFilters() {
@@ -341,6 +511,7 @@ function applyFilters() {
   const years = checkedValues("year");
   const subjects = checkedValues("subject");
   const statuses = checkedValues("status");
+  const topics = checkedValues("topic");
   const query = els.searchInput.value.trim().toLowerCase();
 
   let filtered = state.questions.filter((question) => subjects.includes(question.subject));
@@ -356,6 +527,10 @@ function applyFilters() {
       const haystack = `${question.text} ${Object.values(question.options).join(" ")}`.toLowerCase();
       return haystack.includes(query);
     });
+  }
+
+  if (state.mode !== "exam") {
+    filtered = filtered.filter((question) => topics.includes(question.topicId));
   }
 
   if (state.mode === "wrong") {
@@ -531,6 +706,7 @@ function render() {
   renderQuestionPalette();
   renderExamBar();
   renderExamStartPanel();
+  updateTopicFilterCounts();
 
   if (state.examResult) {
     els.emptyState.hidden = true;
@@ -598,10 +774,11 @@ function render() {
 function renderModeControls() {
   syncModeTabs();
   els.practiceSizeField.hidden = !(state.mode === "practice" || state.mode === "generated");
+  els.topicField.hidden = state.mode === "exam";
   els.questionPalettePanel.hidden = !(isExamInProgress() || state.filtered.length > 1);
   els.examStatusPanel.hidden = !isExamInProgress();
   const lockFilters = isExamInProgress();
-  document.querySelectorAll("input[name='year'], input[name='subject'], input[name='status'], input[name='practiceSize']").forEach((input) => {
+  document.querySelectorAll("input[name='year'], input[name='subject'], input[name='status'], input[name='topic'], input[name='practiceSize']").forEach((input) => {
     input.disabled = lockFilters;
   });
   els.customPracticeSize.disabled = lockFilters;
@@ -715,8 +892,10 @@ function getStatsPool() {
   const years = checkedValues("year");
   const subjects = checkedValues("subject");
   const statuses = checkedValues("status");
+  const topics = checkedValues("topic");
   const query = els.searchInput.value.trim().toLowerCase();
   let pool = state.questions.filter((question) => question.sourceType !== "generated" && years.includes(question.year) && subjects.includes(question.subject));
+  pool = pool.filter((question) => topics.includes(question.topicId));
   if (query) {
     pool = pool.filter((question) => {
       const haystack = `${question.text} ${Object.values(question.options).join(" ")}`.toLowerCase();
@@ -995,50 +1174,30 @@ function showAnswer(question) {
   `;
 }
 
-function getQuestionTopic(question) {
-  if (question.topic) {
-    return {
-      name: question.topic,
-      explanation: question.explanation ?? "此題依（初級）學習指引範圍延伸，請回到題幹情境判斷最符合的應用原則。",
-    };
-  }
-  const text = `${question.text} ${Object.values(question.options).join(" ")}`.toLowerCase();
-  const topics = [
-    {
-      name: "生成式 AI 與模型應用",
-      keywords: ["生成式", "generative", "prompt", "提示", "rag", "擴散", "diffusion", "gan", "transformer", "token", "llm"],
-      explanation: "注意模型能力、輸入輸出限制、應用情境與生成品質控制。",
-    },
-    {
-      name: "機器學習與模型評估",
-      keywords: ["機器學習", "訓練", "測試", "分類", "迴歸", "準確率", "偏差", "變異", "overfitting", "正則化", "lasso", "模型"],
-      explanation: "先判斷題目在問模型訓練、泛化、評估指標或避免過擬合。",
-    },
-    {
-      name: "資料處理與特徵工程",
-      keywords: ["資料", "etl", "特徵", "正規化", "標準化", "one-hot", "編碼", "缺失", "清理", "資料庫"],
-      explanation: "抓住資料流程、欄位轉換、資料品質與特徵設計的目的。",
-    },
-    {
-      name: "AI 導入規劃與專案管理",
-      keywords: ["導入", "規劃", "需求", "利害關係", "成本", "風險", "流程", "專案", "系統"],
-      explanation: "重點通常在需求釐清、風險控管、效益衡量與導入流程順序。",
-    },
-    {
-      name: "倫理治理與法規",
-      keywords: ["倫理", "隱私", "個資", "公平", "偏見", "透明", "治理", "監督", "human", "責任", "法規"],
-      explanation: "留意人類監督、可解釋性、隱私保護、偏見與責任歸屬。",
-    },
-    {
-      name: "AI 基礎概念",
-      keywords: ["人工智慧", "深度學習", "神經網路", "知識", "推論", "自動化", "演算法"],
-      explanation: "確認名詞定義、技術層級與不同 AI 方法的差異。",
-    },
-  ];
-  return topics.find((topic) => topic.keywords.some((keyword) => text.includes(keyword))) ?? {
-    name: question.subject === "1" ? "人工智慧基礎" : "生成式 AI 應用",
-    explanation: "先辨識題目核心名詞，再用情境與選項關鍵字排除不符合者。",
+function enrichQuestionTopic(question) {
+  const topic = classifyQuestionTopic(question);
+  return {
+    ...question,
+    topicId: question.topicId ?? topic.id,
+    topicName: question.topicName ?? topic.name,
   };
+}
+
+function classifyQuestionTopic(question) {
+  if (question.topicId) return TOPIC_DEFINITIONS.find((topic) => topic.id === question.topicId) ?? TOPIC_DEFINITIONS.at(-1);
+  const text = `${question.topic ?? ""} ${question.text} ${Object.values(question.options ?? {}).join(" ")}`.toLowerCase();
+  const scored = TOPIC_DEFINITIONS.filter((topic) => topic.id !== "other")
+    .map((topic) => ({
+      topic,
+      score: topic.keywords.reduce((total, keyword) => total + (text.includes(keyword.toLowerCase()) ? 1 : 0), 0),
+    }))
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score);
+  return scored[0]?.topic ?? TOPIC_DEFINITIONS.at(-1);
+}
+
+function getQuestionTopic(question) {
+  return TOPIC_DEFINITIONS.find((topic) => topic.id === question.topicId) ?? classifyQuestionTopic(question);
 }
 
 function getReviewAdvice(question, record) {
